@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import { assets, projectsData } from '../assets/assets'
+import { motion } from 'framer-motion';
 
 const Projects = () => {
 
@@ -29,13 +31,18 @@ const Projects = () => {
          return setcurrentIndex((prevIndex) => (prevIndex + 1) % (projectsData.length));
     };
 
-const prevProject = () => {
+    const prevProject = () => {
     if (cardsToshow >= projectsData.length) 
         return setcurrentIndex((prevIndex) => prevIndex === 0 ? projectsData.length - 1 : prevIndex - 1);
     };
 
   return (
-    <div className='container mx-auto py-4 pt-20 px-6 md:px-20 lg:px-32 my-20 w-full overflow-hidden' id='Projects'>
+    <motion.div 
+        initial={{opacity:0, x:-200}}
+        transition={{duration:1}}
+        whileInView={{opacity:1, x:0}}
+        viewport={{once:true}}
+     className='container mx-auto py-4 pt-20 px-6 md:px-20 lg:px-32 my-20 w-full overflow-hidden' id='Projects'>
         <h1 className='text-2xl sm:text-4xl font-bold mb-2 text-center'>
              Projects
              <span className='underline underline-offset-4 decoration-1 under-font-light'> Completed </span>
@@ -45,7 +52,7 @@ const prevProject = () => {
         {/* Slider Buttons */}
 
         <div className='flex justify-end items-center mb-8'>
-            <button onClick={prevProject} className='rounded p-3 mr-2 bg-gray-200 cursor-pointer' aria-label='Previous Projects'>
+            <button onClick={prevProject} className='rounded p-3 mr-2 bg-gray-200 cursor-pointer hover:bg-gray-500' aria-label='Previous Projects'>
                 <img src={ assets.left_arrow } alt="Previous" />
             </button>
              <button onClick={nextProject} className='rounded p-3 mr-2 bg-gray-200 cursor-pointer' aria-label='Next Projects'>
@@ -58,7 +65,7 @@ const prevProject = () => {
     <div className='overflow-hidden'>
         <div className='flex gap-8 transition-transform duration-500 ease-in-out'
              style={{
-                transform: `translateX( -${(currentIndex * (100 / cardsToshow))} % )`
+                transform: `translateX( -${(currentIndex * 100) / cardsToshow}% )`
             }}
         >
             {
@@ -78,7 +85,7 @@ const prevProject = () => {
             }
         </div>
     </div>
-    </div>
+    </motion.div>
   )
 }
 
